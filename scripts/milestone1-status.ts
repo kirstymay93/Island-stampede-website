@@ -119,9 +119,11 @@ function run() {
   const core = checkCoreFiles();
   const migration = checkMigrationStructure();
   const totalScore = pkg.score + core.score + migration.score;
+  const maximumScore = 132;
+  const normalizedScore = Math.round((totalScore / maximumScore) * 100);
   const issues = [...pkg.issues, ...core.issues, ...migration.issues];
 
-  console.log(`\n🏗️ Build Score: ${totalScore}/100\n`);
+  console.log(`\n🏗️ Build Score: ${normalizedScore}/100\n`);
 
   if (issues.length === 0) {
     console.log('🎉 Milestone 1 COMPLETE - READY FOR NEXT PHASE\n');
