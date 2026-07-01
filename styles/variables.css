@@ -1,0 +1,23 @@
+:root {
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-brand-black: #000000;
+  --color-brand-blue: #0066ff;
+  --color-brand-white: #ffffff;
+  --color-brand-silver: #c0c0c0;
+  --spacing-section: clamp(4rem, 6vw, 7rem);
+  --spacing-container: clamp(1rem, 3vw, 2rem);
+  --font-display: 'Inter';
+  --font-sans: 'Inter';
+  --tracking-display: -0.04em;
+  --leading-display: 0.95;
+  --duration-fast: 180ms;
+  --duration-standard: 260ms;
+  --easing-standard: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: dark;
+  }
+}

@@ -1,6 +1,6 @@
 # Island Stampede Website
 
-Production-ready Next.js rebuild of Island Stampede - Tasmania's Premier Indoor Professional Bull Riding Event.
+Production-ready Next.js rebuild of Island Stampede — Tasmania's Premier Indoor Professional Bull Riding Event.
 
 ## Quick Start
 
@@ -13,12 +13,19 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ## Technology Stack
 
-- **Framework:** Next.js 14+ (App Router)
+- **Framework:** Next.js 15 App Router
 - **Language:** TypeScript (strict mode)
-- **Styling:** Tailwind CSS
+- **Styling:** Tailwind CSS 4
 - **Animations:** Framer Motion
 - **Code Quality:** ESLint, Prettier, Husky, commitlint
 
-## Project Status
+## Useful Commands
 
-🚀 Phase 1: Core Configuration & Dependencies - IN PROGRESS
+- `npm run build`
+- `npm run lint`
+- `npm run type-check`
+- `npm run milestone:status`
+
+## Source of Truth
+
+All website content and design decisions must align with `/docs/brand/website-brief.md`.
