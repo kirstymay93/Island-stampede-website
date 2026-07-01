@@ -9,13 +9,14 @@ const exemptDirectories = [
   path.join('components', 'layout'),
 ];
 
-const deepImportPattern = /from\s+['"]@\/components\/(ui|layout)\/[^'"]+['"]/g;
+const deepImportPattern =
+  /from\s+['"]@\/components\/(?:ui|layout)\/[^'"]+['"]/g;
 
 async function collectFiles(directory: string): Promise<string[]> {
   const entries = await readdir(directory, { withFileTypes: true });
   const files: string[] = [];
 
-  for (const entry of entries.sort((a, b) => a.name.localeCompare(b.name))) {
+  for (const entry of entries) {
     const absolutePath = path.join(directory, entry.name);
 
     if (entry.isDirectory()) {
