@@ -11,6 +11,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "preinstall": "npx --yes only-allow npm",
     "type-check": "tsc --noEmit",
     "type-check:watch": "tsc --noEmit --watch",
     "prepare": "husky",
