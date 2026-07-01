@@ -21,7 +21,7 @@ jobs:
           cache: npm
 
       - name: Verify lockfile sync
-        run: npm install --package-lock-only --dry-run
+        run: npm install --package-lock-only --dry-run --ignore-scripts
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
@@ -41,7 +41,7 @@ jobs:
           cache: npm
 
       - name: Verify lockfile sync
-        run: npm install --package-lock-only --dry-run
+        run: npm install --package-lock-only --dry-run --ignore-scripts
       - run: npm ci --no-audit --no-fund
       - run: npm run type-check
 
@@ -57,7 +57,7 @@ jobs:
           cache: npm
 
       - name: Verify lockfile sync
-        run: npm install --package-lock-only --dry-run
+        run: npm install --package-lock-only --dry-run --ignore-scripts
       - run: npm ci --no-audit --no-fund
 
       - name: Run unit tests
