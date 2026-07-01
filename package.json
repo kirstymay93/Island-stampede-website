@@ -25,6 +25,7 @@
     "migration:generate-sitemap": "tsx migration/scripts/generate-sitemap.ts",
     "migration:detect-duplicates": "tsx migration/scripts/detect-duplicates.ts",
     "migration:detect-broken-links": "tsx migration/scripts/detect-broken-links.ts",
+    "design-system:audit": "tsx migration/scripts/design-system-audit.ts",
     "migration:report": "tsx migration/scripts/migration-report.ts",
     "milestone:status": "tsx scripts/milestone1-status.ts"
   },
@@ -56,6 +57,7 @@
     "eslint-plugin-react-hooks": "7.1.1",
     "happy-dom": "12.10.3",
     "husky": "9.1.7",
+    "jsdom": "^29.1.1",
     "lint-staged": "17.0.8",
     "only-allow": "^1.2.2",
     "prettier": "3.9.4",
