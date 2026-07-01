@@ -23,11 +23,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22.12.0
           cache: npm
 
+      - name: Verify lockfile sync
+        run: npm install --package-lock-only --dry-run --ignore-scripts
+
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --no-audit --no-fund
 
       - name: Skip when Vercel secrets are missing
         if: ${{ !env.VERCEL_ORG_ID || !env.VERCEL_PROJECT_ID || !env.VERCEL_TOKEN }}
