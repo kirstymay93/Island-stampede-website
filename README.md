@@ -26,6 +26,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 - `npm run build`
 - `npm run lint`
 - `npm run type-check`
+- `npm run test:ci`
+- `npm run design-system:audit`
 - `npm run milestone:status`
 
 ## Source of Truth
