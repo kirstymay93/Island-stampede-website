@@ -16,7 +16,7 @@
     "prepare": "husky",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ci": "vitest run --reporter=verbose --passWithNoTests",
+    "test:ci": "vitest run --reporter=verbose",
     "migration:analyze": "tsx migration/scripts/analyze-assets.ts",
     "migration:extract-colors": "tsx migration/scripts/extract-colors.ts",
     "migration:extract-fonts": "tsx migration/scripts/extract-fonts.ts",
@@ -42,6 +42,9 @@
     "@commitlint/cli": "21.2.0",
     "@commitlint/config-conventional": "21.2.0",
     "@tailwindcss/postcss": "4.3.2",
+    "@testing-library/jest-dom": "6.1.5",
+    "@testing-library/react": "14.1.2",
+    "@testing-library/user-event": "14.5.1",
     "@types/node": "20.19.43",
     "@types/react": "18.3.31",
     "@types/react-dom": "18.3.7",
@@ -50,12 +53,13 @@
     "eslint": "8.57.1",
     "eslint-config-next": "15.5.19",
     "eslint-plugin-react-hooks": "7.1.1",
+    "happy-dom": "12.10.3",
     "husky": "9.1.7",
     "lint-staged": "17.0.8",
     "prettier": "3.9.4",
     "tsx": "4.22.4",
     "typescript": "5.5.4",
-    "vitest": "^3.2.6"
+    "vitest": "3.2.6"
   },
   "overrides": {
     "postcss": "8.5.16"
