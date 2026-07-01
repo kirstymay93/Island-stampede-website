@@ -9,6 +9,8 @@ npm install
 npm run dev
 ```
 
+`npm install` enforces npm as the package manager via a `preinstall` guard.
+
 Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ## Technology Stack
