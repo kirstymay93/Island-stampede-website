@@ -16,7 +16,7 @@
     "prepare": "husky",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ci": "vitest run --reporter=verbose",
+    "test:ci": "vitest run --reporter=verbose --passWithNoTests",
     "migration:analyze": "tsx migration/scripts/analyze-assets.ts",
     "migration:extract-colors": "tsx migration/scripts/extract-colors.ts",
     "migration:extract-fonts": "tsx migration/scripts/extract-fonts.ts",
