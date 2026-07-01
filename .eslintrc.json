@@ -1,5 +1,10 @@
 {
-  "ignorePatterns": [".next/", "next-env.d.ts"],
+  "ignorePatterns": [
+    ".next/",
+    "next-env.d.ts",
+    "lint-staged.config.js",
+    "commitlint.config.js"
+  ],
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "error",
