@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "frontend",
+    "name": "Island Stampede",
     "slug": "frontend",
     "version": "1.0.0",
+    "description": "Island Stampede — Tasmania's Premier Indoor Professional Bull Riding Event. 2-3 October 2026, Launceston Silverdome. LET'S RIDE TASMANIA.",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "frontend",
