@@ -50,7 +50,7 @@ export default function Landing() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [galleryIndex, setGalleryIndex] = useState(0);
 
-  const openTickets = () => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy); setSheet('ticket'); };
+  const openTickets = () => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy); WebBrowser.openBrowserAsync(EVENT.ticketUrl); };
   const openSponsor = () => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); setSheet('sponsor'); };
   const openUrl = (url: string) => { Haptics.selectionAsync(); WebBrowser.openBrowserAsync(url); };
 

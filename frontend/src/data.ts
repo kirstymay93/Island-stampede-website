@@ -47,7 +47,7 @@ export const TESTIMONIALS = [
 ];
 
 export const FAQS = [
-  { q: 'How do I buy tickets?', a: 'Official tickets are sold through Ticketek (search "Island Stampede Bullride 2026"). Tap BUY TICKETS to register for priority access and we\u2019ll send you the secure Ticketek link before they sell out — the Saturday main event regularly sells out.' },
+  { q: 'How do I buy tickets?', a: 'Tap BUY TICKETS to head straight to the official Ticketek page ("Island Stampede Bullride 2026") and secure your seats. The Saturday night main event regularly sells out, so book early.' },
   { q: 'What are the entry requirements?', a: 'All attendees need a valid ticket. Doors open from 5:00 PM. VIP Meet & Greet packages are strictly 18+. Standard bag checks apply.' },
   { q: 'Is it suitable for families?', a: 'Absolutely. Island Stampede is a family-friendly event with all-ages seating, music, food vendors and licensed bars for the adults.' },
   { q: 'Is parking available?', a: 'Yes — parking is available at the Silverdome (55 Oakden Rd, Prospect), plus a dedicated rideshare pickup and drop-off zone.' },
