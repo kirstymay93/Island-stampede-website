@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, Pressable, Dimensions,
+  View, Text, StyleSheet, ScrollView, Pressable,
   FlatList, ImageBackground, useWindowDimensions, LayoutAnimation,
   Platform, UIManager,
 } from 'react-native';
@@ -87,10 +87,11 @@ export default function Landing() {
           <View style={styles.heroContent}>
             <View style={styles.liveBadge}>
               <View style={styles.liveDot} />
-              <Text style={styles.liveText}>TASMANIA'S PREMIER PRO BULL RIDING</Text>
+              <Text style={styles.liveText}>TASMANIA&apos;S PREMIER PRO BULL RIDING</Text>
             </View>
             <Text style={styles.heroTitle} testID="hero-title">{EVENT.tagline}</Text>
             <Text style={styles.heroSub}>{EVENT.subtitle}</Text>
+            <Text style={styles.heroPresenter}>{EVENT.presenter}</Text>
             <View style={styles.heroMeta}>
               <View style={styles.metaChip}>
                 <Ionicons name="calendar" size={14} color={colors.brand} />
@@ -118,14 +119,14 @@ export default function Landing() {
         <Animated.View entering={FadeInDown.duration(500)} style={styles.section}>
           <SectionHeader kicker="THE EVENT" title="WELCOME TO THE STAMPEDE" testID="about-section" />
           <Text style={styles.body}>
-            Island Stampede brings the raw power of professional bull riding to the heart of Tasmania.
-            For two electrifying nights, the Launceston Silverdome transforms into a full-scale sports
-            arena — pyrotechnics, thunderous sound, and the world's boldest riders going head-to-head
-            against 700kg of pure muscle.
+            Presented by Bucking Good Rodeo Promotions, Island Stampede brings professional bull riding
+            to Tasmania&apos;s Silverdome. Australia&apos;s top bull riders go head-to-head with some of the country&apos;s
+            rankest bulls in an electrifying indoor arena showdown, backed by music, lights and feature events.
           </Text>
           <Text style={styles.body}>
-            This isn't a country fair. It's a premium, high-octane spectacle engineered like a UFC fight
-            night — elite athletes, world-class production and an atmosphere that hits like a freight train.
+            It&apos;s a full weekend of high-energy entertainment beyond the chutes — food vendors, licensed bars
+            and a vibrant atmosphere for families, couples and groups. Proceeds support the Launceston
+            Children&apos;s Ward Auxiliary at the LGH. The Saturday night main event regularly sells out.
           </Text>
           <View style={styles.statRow}>
             {[['20+', 'ELITE RIDERS'], ['2', 'BIG NIGHTS'], ['5K+', 'FANS ROARING']].map(([n, l]) => (
@@ -199,9 +200,13 @@ export default function Landing() {
         <View style={styles.section}>
           <SectionHeader kicker="OUR PARTNERS" title="POWERED BY THE BEST" testID="sponsors-section" />
           <View style={styles.sponsorGrid}>
-            {SPONSORS.map((s) => (
-              <View key={s} style={styles.sponsorCard}>
-                <Text style={styles.sponsorText}>{s}</Text>
+            {SPONSORS.map((s, i) => (
+              <View
+                key={`${s.name}-${i}`}
+                style={[styles.sponsorCard, s.available && styles.sponsorCardOpen]}
+                testID={`sponsor-card-${i}`}
+              >
+                <Text style={[styles.sponsorText, s.available && styles.sponsorTextOpen]}>{s.name}</Text>
               </View>
             ))}
           </View>
@@ -254,9 +259,9 @@ export default function Landing() {
         <View style={styles.finalCta} testID="final-cta-section">
           <LinearGradient colors={[colors.brandSecondary, colors.brand]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.finalGradient}>
             <Text style={styles.finalKicker}>TICKETS SELLING FAST</Text>
-            <Text style={styles.finalTitle}>DON'T MISS THE ROAR</Text>
+            <Text style={styles.finalTitle}>DON&apos;T MISS THE ROAR</Text>
             <Text style={styles.finalSub}>
-              Two nights only. Limited ringside & VIP. Once they're gone, they're gone.
+              Two nights only. Limited ringside & VIP. Once they&apos;re gone, they&apos;re gone.
             </Text>
             <Pressable style={styles.finalBtn} onPress={openTickets} testID="final-buy-tickets-button">
               <Text style={styles.finalBtnText}>BUY TICKETS NOW</Text>
@@ -265,7 +270,13 @@ export default function Landing() {
           </LinearGradient>
         </View>
 
-        <Text style={styles.footer}>© 2026 Island Stampede · Launceston, Tasmania</Text>
+        <View style={styles.footerWrap}>
+          <Text style={styles.footerBrand}>ISLAND STAMPEDE</Text>
+          <Text style={styles.footer}>{EVENT.presenter}</Text>
+          <Text style={styles.footer}>{EVENT.address}</Text>
+          <Text style={styles.footer}>{EVENT.phone} · {EVENT.email}</Text>
+          <Text style={styles.footer}>© 2026 Island Stampede · Launceston, Tasmania</Text>
+        </View>
       </ScrollView>
 
       {/* Sticky bottom CTA */}
@@ -283,9 +294,6 @@ export default function Landing() {
     </View>
   );
 }
-
-const { width: SCREEN_W } = Dimensions.get('window');
-const CARD_W = (SCREEN_W - spacing.lg * 2 - spacing.md) / 2;
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.surface },
@@ -310,7 +318,8 @@ const styles = StyleSheet.create({
   liveDot: { width: 6, height: 6, borderRadius: radius.pill, backgroundColor: colors.brand },
   liveText: { color: colors.onBrandTertiary, fontFamily: font.bold, fontSize: 10, letterSpacing: 1 },
   heroTitle: { color: colors.onSurface, fontFamily: font.display, fontSize: 68, lineHeight: 64, letterSpacing: 1 },
-  heroSub: { color: colors.onSurfaceSecondary, fontFamily: font.semibold, fontSize: 16, marginTop: spacing.sm, marginBottom: spacing.lg },
+  heroSub: { color: colors.onSurfaceSecondary, fontFamily: font.semibold, fontSize: 16, marginTop: spacing.sm },
+  heroPresenter: { color: colors.onSurfaceTertiary, fontFamily: font.regular, fontSize: 12, marginTop: 4, marginBottom: spacing.lg, letterSpacing: 0.5 },
   heroMeta: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginBottom: spacing.xl },
   metaChip: {
     flexDirection: 'row', alignItems: 'center', gap: spacing.xs,
@@ -342,8 +351,8 @@ const styles = StyleSheet.create({
   statNum: { color: colors.brand, fontFamily: font.display, fontSize: 34 },
   statLabel: { color: colors.onSurfaceTertiary, fontFamily: font.bold, fontSize: 10, letterSpacing: 1, marginTop: 2 },
 
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
-  gridCard: { width: CARD_W, backgroundColor: colors.surfaceSecondary, borderWidth: 1, borderColor: colors.border, borderRadius: radius.lg, padding: spacing.lg },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', rowGap: spacing.md },
+  gridCard: { width: '48%', backgroundColor: colors.surfaceSecondary, borderWidth: 1, borderColor: colors.border, borderRadius: radius.lg, padding: spacing.lg },
   iconWrap: { width: 40, height: 40, borderRadius: radius.md, backgroundColor: colors.brandTertiary, alignItems: 'center', justifyContent: 'center', marginBottom: spacing.md },
   cardTitle: { color: colors.onSurface, fontFamily: font.extrabold, fontSize: 16, marginBottom: spacing.xs },
   cardDesc: { color: colors.onSurfaceTertiary, fontFamily: font.regular, fontSize: 13, lineHeight: 19 },
@@ -358,9 +367,11 @@ const styles = StyleSheet.create({
   infoLabel: { color: colors.onSurfaceTertiary, fontFamily: font.bold, fontSize: 11, letterSpacing: 1 },
   infoValue: { color: colors.onSurface, fontFamily: font.semibold, fontSize: 15, marginTop: 2 },
 
-  sponsorGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
-  sponsorCard: { width: CARD_W, height: 72, backgroundColor: colors.surfaceSecondary, borderWidth: 1, borderColor: colors.border, borderRadius: radius.lg, alignItems: 'center', justifyContent: 'center' },
+  sponsorGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', rowGap: spacing.md },
+  sponsorCard: { width: '48%', height: 72, backgroundColor: colors.surfaceSecondary, borderWidth: 1, borderColor: colors.border, borderRadius: radius.lg, alignItems: 'center', justifyContent: 'center' },
+  sponsorCardOpen: { backgroundColor: 'transparent', borderStyle: 'dashed', borderColor: colors.borderStrong },
   sponsorText: { color: colors.silver, fontFamily: font.extrabold, fontSize: 15, letterSpacing: 1 },
+  sponsorTextOpen: { color: colors.onSurfaceTertiary, fontFamily: font.bold, fontSize: 12 },
   sponsorCta: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm, marginTop: spacing.lg, paddingVertical: spacing.lg, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.brand },
   sponsorCtaText: { color: colors.onSurface, fontFamily: font.bold, fontSize: 13, letterSpacing: 1 },
 
