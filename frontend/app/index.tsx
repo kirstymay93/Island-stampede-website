@@ -11,10 +11,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import * as Haptics from 'expo-haptics';
+import * as WebBrowser from 'expo-web-browser';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { colors, font, spacing, radius } from '@/src/theme';
-import { EVENT, WHY_ATTEND, EVENT_INFO, SPONSORS, TESTIMONIALS, FAQS, GALLERY } from '@/src/data';
+import { EVENT, WHY_ATTEND, EVENT_INFO, SPONSORS, TESTIMONIALS, FAQS, GALLERY, VIDEO, STORE_URL, SHOP } from '@/src/data';
 import Countdown from '@/src/components/Countdown';
 import LeadSheet from '@/src/components/LeadSheet';
 
@@ -51,6 +52,7 @@ export default function Landing() {
 
   const openTickets = () => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy); setSheet('ticket'); };
   const openSponsor = () => { Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium); setSheet('sponsor'); };
+  const openUrl = (url: string) => { Haptics.selectionAsync(); WebBrowser.openBrowserAsync(url); };
 
   const toggleFaq = (i: number) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -180,6 +182,23 @@ export default function Landing() {
           </View>
         </View>
 
+        {/* VIDEO */}
+        <View style={styles.section}>
+          <SectionHeader kicker="HIGHLIGHTS" title="FEEL THE ADRENALINE" testID="video-section" />
+          <Pressable style={styles.videoCard} onPress={() => openUrl(VIDEO.url)} testID="video-play-button">
+            <Image source={IMAGES[VIDEO.poster]} style={StyleSheet.absoluteFill} contentFit="cover" />
+            <LinearGradient colors={['rgba(10,10,10,0.15)', 'rgba(10,10,10,0.75)']} style={StyleSheet.absoluteFill} />
+            <View style={styles.playCircle}>
+              <Ionicons name="play" size={30} color="#fff" style={{ marginLeft: 3 }} />
+            </View>
+            <View style={styles.videoBadge}>
+              <Ionicons name="logo-facebook" size={14} color="#fff" />
+              <Text style={styles.videoBadgeText}>WATCH THE REEL</Text>
+            </View>
+          </Pressable>
+          <Text style={styles.videoCaption}>See last year&apos;s action from inside the arena.</Text>
+        </View>
+
         {/* EVENT INFO */}
         <View style={styles.section}>
           <SectionHeader kicker="KNOW BEFORE YOU GO" title="EVENT INFORMATION" testID="event-info-section" />
@@ -195,6 +214,38 @@ export default function Landing() {
             </View>
           ))}
         </View>
+
+        {/* SHOP */}
+        <View style={[styles.section, { paddingHorizontal: 0 }]}>
+          <View style={{ paddingHorizontal: spacing.lg }}>
+            <SectionHeader kicker="OFFICIAL MERCH" title="GEAR UP" testID="shop-section" />
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: spacing.lg, gap: spacing.md }}
+          >
+            {SHOP.map((p, i) => (
+              <Pressable key={i} style={styles.shopCard} onPress={() => openUrl(p.url)} testID={`shop-item-${i}`}>
+                <Image source={{ uri: p.image }} style={styles.shopImg} contentFit="cover" transition={200} />
+                <View style={styles.shopBody}>
+                  <Text style={styles.shopTitle} numberOfLines={2}>{p.title}</Text>
+                  <View style={styles.shopRow}>
+                    <Text style={styles.shopPrice}>{p.price}</Text>
+                    <View style={styles.shopBtn}>
+                      <Text style={styles.shopBtnText}>SHOP</Text>
+                    </View>
+                  </View>
+                </View>
+              </Pressable>
+            ))}
+          </ScrollView>
+          <Pressable style={[styles.sponsorCta, { marginHorizontal: spacing.lg }]} onPress={() => openUrl(STORE_URL)} testID="shop-all-button">
+            <Ionicons name="bag" size={18} color={colors.brand} />
+            <Text style={styles.sponsorCtaText}>VISIT THE OFFICIAL STORE</Text>
+          </Pressable>
+        </View>
+
 
         {/* SPONSORS */}
         <View style={styles.section}>
@@ -361,6 +412,21 @@ const styles = StyleSheet.create({
   dots: { flexDirection: 'row', justifyContent: 'center', gap: spacing.xs, marginTop: spacing.lg },
   dot: { width: 8, height: 8, borderRadius: radius.pill, backgroundColor: colors.borderStrong },
   dotActive: { backgroundColor: colors.brand, width: 22 },
+
+  videoCard: { height: 220, borderRadius: radius.lg, overflow: 'hidden', alignItems: 'center', justifyContent: 'center', backgroundColor: colors.surfaceSecondary },
+  playCircle: { width: 74, height: 74, borderRadius: radius.pill, backgroundColor: colors.brand, alignItems: 'center', justifyContent: 'center', borderWidth: 4, borderColor: 'rgba(255,255,255,0.35)' },
+  videoBadge: { position: 'absolute', bottom: spacing.md, left: spacing.md, flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: 'rgba(0,0,0,0.6)', paddingHorizontal: spacing.sm, paddingVertical: spacing.xs, borderRadius: radius.md },
+  videoBadgeText: { color: '#fff', fontFamily: font.bold, fontSize: 11, letterSpacing: 1 },
+  videoCaption: { color: colors.onSurfaceTertiary, fontFamily: font.regular, fontSize: 13, marginTop: spacing.md, textAlign: 'center' },
+
+  shopCard: { width: 200, backgroundColor: colors.surfaceSecondary, borderWidth: 1, borderColor: colors.border, borderRadius: radius.lg, overflow: 'hidden' },
+  shopImg: { width: '100%', height: 180, backgroundColor: colors.surfaceTertiary },
+  shopBody: { padding: spacing.md },
+  shopTitle: { color: colors.onSurface, fontFamily: font.bold, fontSize: 14, minHeight: 38 },
+  shopRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: spacing.sm },
+  shopPrice: { color: colors.onBrandTertiary, fontFamily: font.extrabold, fontSize: 16 },
+  shopBtn: { backgroundColor: colors.brand, paddingHorizontal: spacing.md, paddingVertical: spacing.xs, borderRadius: radius.md },
+  shopBtnText: { color: '#fff', fontFamily: font.extrabold, fontSize: 12, letterSpacing: 1 },
 
   infoRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.divider },
   infoIcon: { width: 40, height: 40, borderRadius: radius.md, backgroundColor: colors.surfaceSecondary, borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center' },

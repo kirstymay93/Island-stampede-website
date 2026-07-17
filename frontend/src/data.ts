@@ -56,3 +56,20 @@ export const FAQS = [
 ];
 
 export const GALLERY = ['hero', 'gallery1', 'gallery2', 'gallery3', 'gallery4'] as const;
+
+// Official highlights reel (Facebook)
+export const VIDEO = {
+  url: 'https://www.facebook.com/reel/4486245531595174/',
+  poster: 'gallery3' as const,
+};
+
+// Official online store (Bucking Good Rodeo Promotions / Shopify)
+export const STORE_URL = 'https://buckinggoodrodeopromotions.myshopify.com/collections/all';
+const STORE = 'https://buckinggoodrodeopromotions.myshopify.com/products/';
+
+export const SHOP: { title: string; price: string; image: string; url: string }[] = [
+  { title: "'Island Stampede' Trucker Cap", price: '$40.00', image: 'https://cdn.shopify.com/s/files/1/0723/0560/6808/files/IMG_1434.jpg?v=1756432485', url: STORE + 'ctc-island-stampede-bullride-trucker-cap' },
+  { title: "'Island Stampede' Beanie — Grey/Maroon", price: '$30.00', image: 'https://cdn.shopify.com/s/files/1/0723/0560/6808/files/IMG_1367_cf651b35-34ce-4141-a9f1-47142a4cebe0.jpg?v=1756119645', url: STORE + 'island-stampede-bullride-beanie-1' },
+  { title: "'Island Stampede' Beanie — Blue/Maroon", price: '$30.00', image: 'https://cdn.shopify.com/s/files/1/0723/0560/6808/files/IMG_1354_778d46ad-7ba8-411e-90aa-146c9c0137c5.jpg?v=1756119475', url: STORE + 'island-stampede-bullride-beanie' },
+  { title: "'Bucking Good Rodeo' Cap", price: '$39.95', image: 'https://cdn.shopify.com/s/files/1/0723/0560/6808/files/21564FDD-AB01-4E4D-B124-4EBB99C78382.png?v=1756117411', url: STORE + 'bucking-good-rodeo-promotions-cap' },
+];
