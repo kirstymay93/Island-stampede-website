@@ -24,11 +24,11 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 }
 
 const IMAGES: Record<string, any> = {
-  hero: require('../assets/images/hero.png'),
-  gallery1: require('../assets/images/gallery1.png'),
-  gallery2: require('../assets/images/gallery2.png'),
-  gallery3: require('../assets/images/gallery3.png'),
-  gallery4: require('../assets/images/gallery4.png'),
+  hero: require('../assets/images/hero.jpg'),
+  gallery1: require('../assets/images/gallery1.jpg'),
+  gallery2: require('../assets/images/gallery2.jpg'),
+  gallery3: require('../assets/images/gallery3.jpg'),
+  gallery4: require('../assets/images/gallery4.jpg'),
 };
 
 function SectionHeader({ kicker, title, testID }: { kicker: string; title: string; testID?: string }) {

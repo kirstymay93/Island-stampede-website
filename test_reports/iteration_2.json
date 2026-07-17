@@ -1,0 +1,37 @@
+{
+  "summary": "Bug-fix verification for JPEG-with-.png -> real .jpg migration. All 5 local assets (hero.jpg, gallery1-4.jpg) are now real JPEGs (verified via magic bytes: ff d8 ff). No .png references to hero/gallery remain in source (only stale metro cache entries, harmless). Frontend web preview loads cleanly on 390x844 mobile viewport with 0 broken images (11 img elements all natural width > 0 for loaded ones; late-loading gallery3/4/hero all serve correctly from /assets/?unstable_path=./assets/images/gallery*.jpg). All 17 major sections visible (hero, buy-tickets, sponsor, about, why-attend, gallery, video, event-info, shop with 4 shopify items, sponsors, testimonials, faq, final-cta, sticky-sponsor, sticky-buy-tickets). BECOME A SPONSOR flow: hero-sponsor-button opens lead-sheet with title 'BECOME A SPONSOR', name+email submit -> POST /api/leads (type=sponsor) succeeds, success state 'YOU'RE ON THE LIST' rendered. Backend pytest 10/10 passed. /api/stats shows ticket_leads=4, sponsor_leads=4; new sponsor lead persisted with expected schema (no MongoDB _id leak).",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "POST /api/leads", "issue": "Returns 200 instead of 201 Created (minor REST convention, carried from iteration_1)"}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "LeadSheet", "issues": ["On 390x844 the submit button starts just below the initial viewport fold (Playwright reported 'Element is outside of the viewport' on first click). Users can still reach it via the inner ScrollView, but consider reducing vertical padding or auto-scrolling to the submit button when opened."]}
+    ],
+    "react_native_issues": []
+  },
+  "test_report_links": ["/app/backend/tests/test_leads.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "None blocking. (Optional) Compact LeadSheet so submit button is above fold on 390x844.",
+    "(Optional) Return 201 from POST /api/leads for REST correctness.",
+    "(Optional cleanup) Metro cache under /app/frontend/.metro-cache/ still contains stale references to old .png asset paths. Not affecting runtime, but running `rm -rf /app/frontend/.metro-cache /app/frontend/.expo` and restarting expo would clean it up."
+  ],
+  "critical_code_review_comments": [
+    "index.tsx correctly requires ../assets/images/{hero,gallery1..4}.jpg — matches on-disk JPEG files.",
+    "Local IMAGES map uses require() (bundled), while SHOP images use remote URIs (expected Shopify CDN) — both render fine.",
+    "GALLERY constant lists 5 keys and dots array maps 1:1, dot state driven by onScroll -> setGalleryIndex.",
+    "Backend excludes MongoDB _id via {'_id': 0} projection — confirmed absent in list response.",
+    "LeadSheet posts to `${EXPO_PUBLIC_BACKEND_URL}/api/leads` and correctly sends `company` for sponsor / `party_size` for ticket."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (10/10)", "frontend": "100% of critical acceptance criteria"},
+  "seed_data_creation": "Added 1 TEST_-prefixed sponsor lead via UI: test_verify_sponsor2@example.com. Iteration_1 seed leads also still present. Safe to purge by filtering emails matching test_verify*@example.com or test_*@example.com.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Bug fix (jpeg-as-png Android AAPT failure) is confirmed resolved from a web-preview / runtime perspective. Actual Android app-bundle build must be re-tried by main agent to close the loop (this environment cannot run gradle). Frontend testIDs unchanged from iteration_1. BASE_URL for API: https://island-stampede.preview.emergentagent.com/api. When testing the LeadSheet submit button on 390x844, scroll it into view first via evaluate() or the sheet's inner ScrollView before clicking.",
+  "rca_of_issue": "Root cause of the reported Android build failure: gallery1/2/3.png (and hero.png, gallery4.png) were JPEG-encoded byte streams stored under .png filenames. AAPT parses by magic bytes and rejects them (`file failed to compile`). Fix applied by main agent: re-encoded to real JPEG bytes, saved as .jpg, updated require() paths in index.tsx from `.png` -> `.jpg`. Verification here: (1) magic-byte check on all 5 files returns JPEG; (2) no .png reference remains for hero/gallery in source (grep clean, only stale metro cache); (3) all 5 images render in the web preview with non-zero natural dimensions; (4) no red-screen / pageerror during app load; (5) no console errors captured."
+}
