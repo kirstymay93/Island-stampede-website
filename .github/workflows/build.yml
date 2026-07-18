@@ -21,14 +21,14 @@ jobs:
           cache: yarn
           cache-dependency-path: frontend/yarn.lock
 
-      - name: Enable Yarn
+      - name: Enable Yarn Classic
         run: corepack enable
 
-      - name: Install
+      - name: Install dependencies
         working-directory: frontend
         run: yarn install --frozen-lockfile
 
-      - name: TypeScript Check
+      - name: TypeScript check
         working-directory: frontend
         run: npx tsc --noEmit
 
@@ -39,7 +39,7 @@ jobs:
           EXPO_PUBLIC_SITE_URL: https://island-stampede.vercel.app
         run: yarn build
 
-      - name: Verify Export
+      - name: Verify Build
         run: |
           test -f frontend/web-build/index.html
           echo "✅ BUILD SUCCESS"
