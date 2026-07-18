@@ -1,45 +1,23 @@
-name: Expo Web Build
+python3 - <<'PY'
+from pathlib import Path
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+p = Path(".github/workflows/build.yml")
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+if not p.exists():
+    raise SystemExit("❌ build.yml not found")
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+text = p.read_text()
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: yarn
-          cache-dependency-path: frontend/yarn.lock
+text = text.replace(
+    "cache-dependency-path: frontend/yarn.lock",
+    "cache-dependency-path: frontend/package.json"
+)
 
-      - name: Enable Yarn Classic
-        run: corepack enable
+p.write_text(text)
 
-      - name: Install dependencies
-        working-directory: frontend
-        run: yarn install --frozen-lockfile
+print("✅ Updated GitHub Actions cache path")
+PY
 
-      - name: TypeScript check
-        working-directory: frontend
-        run: npx tsc --noEmit
-
-      - name: Expo Web Build
-        working-directory: frontend
-        env:
-          EXPO_PUBLIC_BACKEND_URL: https://api.example.com
-          EXPO_PUBLIC_SITE_URL: https://island-stampede.vercel.app
-        run: yarn build
-
-      - name: Verify Build
-        run: |
-          test -f frontend/web-build/index.html
-          echo "✅ BUILD SUCCESS"
+git add .github/workflows/build.yml
+git commit -m "Fix GitHub Actions yarn cache path"
+git push origin website-clone
